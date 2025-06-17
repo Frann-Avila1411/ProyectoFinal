@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestor de Eventos</title>
 
-    <!-- Bootstrap CSS -->
+    <!-- Estilos Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Font Awesome -->
+    <!-- Íconos Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
@@ -19,7 +19,7 @@
     </nav>
 
     <div class="container">
-        {{-- Alertas de éxito --}}
+        <!-- Mensaje de éxito -->
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
@@ -27,7 +27,7 @@
             </div>
         @endif
 
-        {{-- Alertas de error --}}
+        <!-- Mensajes de error -->
         @if ($errors->any())
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <ul class="mb-0">
@@ -39,11 +39,18 @@
             </div>
         @endif
 
-        {{-- Contenido específico de cada vista --}}
+        <!-- Contenido principal -->
         @yield('content')
+
+        <!-- Sección para búsqueda u otros elementos opcionales -->
+        @yield('search')
     </div>
 
-    <!-- Bootstrap JS -->
+    <!-- Scripts Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Scripts adicionales de cada vista -->
+    @yield('scripts')
+
 </body>
 </html>

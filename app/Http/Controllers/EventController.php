@@ -7,20 +7,48 @@ use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
-    // Mostrar todos los eventos
-    public function index()
+    // Listar eventos con filtros y paginación
+    public function index(Request $request)
     {
-        $eventos = Event::orderBy('fecha', 'asc')->paginate(10);
+        $query = Event::orderBy('fecha', 'asc');
+
+        // Aplicar búsqueda según filtro seleccionado
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+
+            if ($request->filter == 'nombre_evento') {
+                $query->where('nombre_evento', 'LIKE', '%' . $search . '%');
+            } elseif ($request->filter == 'lugar') {
+                $query->where('lugar', 'LIKE', '%' . $search . '%');
+            } else {
+                $query->where('nombre_evento', 'LIKE', '%' . $search . '%')
+                      ->orWhere('lugar', 'LIKE', '%' . $search . '%');
+            }
+        }
+
+        // Filtrar por tipo de evento
+        if ($request->has('evento') && $request->evento != '') {
+            $query->where('nombre_evento', 'LIKE', '%' . $request->evento . '%');
+        }
+
+        // Filtrar por lugar
+        if ($request->has('lugar') && $request->lugar != '') {
+            $query->where('lugar', 'LIKE', '%' . $request->lugar . '%');
+        }
+
+        // Obtener eventos paginados
+        $eventos = $query->paginate(10);
+
         return view('events.index', compact('eventos'));
     }
 
-    // Mostrar formulario de creación
+    // Mostrar formulario para crear nuevo evento
     public function create()
     {
         return view('events.create');
     }
 
-    // Almacenar un nuevo evento
+    // Validar y almacenar nuevo evento
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -42,7 +70,7 @@ class EventController extends Controller
         return redirect()->route('events.index')->with('success', 'Evento creado correctamente.');
     }
 
-    // Mostrar un evento específico
+    // Mostrar detalles de un evento específico
     public function show($id)
     {
         $evento = Event::findOrFail($id);
@@ -56,7 +84,7 @@ class EventController extends Controller
         return view('events.edit', compact('evento'));
     }
 
-    // Actualizar evento
+    // Validar y actualizar evento existente
     public function update(Request $request, $id)
     {
         $evento = Event::findOrFail($id);
@@ -80,7 +108,7 @@ class EventController extends Controller
         return redirect()->route('events.index')->with('success', 'Evento actualizado correctamente.');
     }
 
-    // Eliminar evento
+    // Eliminar evento por id
     public function destroy($id)
     {
         $evento = Event::findOrFail($id);
