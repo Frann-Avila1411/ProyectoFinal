@@ -4,25 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
-    // Mostrar todos los eventos
+    // mostrar todos los eventos registradoa
     public function index()
     {
+        $this->authorize('viewAny', Event::class);
         $eventos = Event::orderBy('fecha', 'asc')->paginate(10);
         return view('events.index', compact('eventos'));
     }
 
-    // Mostrar formulario de creación
+    // mostrar formulario de creación de evento
     public function create()
     {
+        $this->authorize('create', Event::class);
         return view('events.create');
     }
 
     // Almacenar un nuevo evento
     public function store(Request $request)
     {
+        $this->authorize('create', Event::class);
         $validated = $request->validate([
             'nombre_evento' => 'required|string|max:100|unique:events',
             'fecha' => 'required|date|after_or_equal:today',
@@ -46,13 +50,15 @@ class EventController extends Controller
     public function show($id)
     {
         $evento = Event::findOrFail($id);
+        $this->authorize('view', $evento);
         return view('events.show', compact('evento'));
     }
 
-    // Mostrar formulario para editar evento
+    // Mostrar formulario para editar evento 
     public function edit($id)
     {
         $evento = Event::findOrFail($id);
+        $this->authorize('update', $evento);
         return view('events.edit', compact('evento'));
     }
 
@@ -60,7 +66,7 @@ class EventController extends Controller
     public function update(Request $request, $id)
     {
         $evento = Event::findOrFail($id);
-
+        $this->authorize('update', $evento);
         $validated = $request->validate([
             'nombre_evento' => 'required|string|max:100|unique:events,nombre_evento,' . $evento->id,
             'fecha' => 'required|date|after_or_equal:today',
@@ -84,8 +90,9 @@ class EventController extends Controller
     public function destroy($id)
     {
         $evento = Event::findOrFail($id);
+        $this->authorize('delete', $evento);
         $evento->delete();
 
         return redirect()->route('events.index')->with('success', 'Evento eliminado correctamente.');
     }
-}
+} 

@@ -17,4 +17,4 @@ class Event extends Model
     protected $casts = [
         'fecha' => 'date',
     ];
-}
+} 

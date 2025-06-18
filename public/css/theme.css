@@ -1,0 +1,226 @@
+/* =====================
+   Paleta de colores 
+   ===================== */
+:root {
+  --fondo: #F9FAFB;
+  --card: #FFFFFF;
+  --primario: #4F46E5;
+  --secundario: #6366F1;
+  --texto: #111827;
+  --borde: #E5E7EB;
+  --gradiente: linear-gradient(90deg, #6366F1 0%, #3B82F6 100%);
+  --sombra: 0px 4px 20px rgba(0,0,0,0.08);
+  --radio: 1rem;
+  --success: #22c55e;
+  --danger: #ef4444;
+  --descripcion: #4B5563; 
+}
+[data-theme="dark"] {
+  --fondo: #1F2937;
+  --card: #111827;
+  --primario: #818CF8;
+  --secundario: #6366F1;
+  --texto: #F3F4F6;
+  --borde: #374151;
+  --gradiente: linear-gradient(90deg, #6366F1 0%, #818CF8 100%);
+  --sombra: 0px 4px 20px rgba(0,0,0,0.25);
+  --descripcion: #d1d5db; 
+}
+
+body {
+  background: var(--fondo) !important;
+  color: var(--texto) !important;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  transition: background 0.4s, color 0.4s;
+}
+
+/* =====================
+   Navbar y gradiente
+   ===================== */
+.navbar {
+  background: var(--gradiente) !important;
+  box-shadow: var(--sombra);
+  border-radius: var(--radio);
+}
+.navbar .navbar-brand {
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #fff !important;
+}
+
+/* =====================
+   Cards y timeline
+   ===================== */
+.card, .timeline-card {
+  background: var(--card);
+  color: var(--texto);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  border: 1px solid var(--borde);
+  margin-bottom: 1.5rem;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+.card:hover, .timeline-card:hover {
+  box-shadow: 0px 8px 32px rgba(99,102,241,0.15);
+  transform: translateY(-4px) scale(1.01);
+}
+
+/* Timeline vertical */
+.timeline {
+  position: relative;
+  margin-left: 2rem;
+  padding-left: 1.5rem;
+  border-left: 3px solid var(--primario);
+}
+.timeline-card {
+  position: relative;
+  margin-left: -2.5rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem 1.5rem 1.5rem 3.5rem;
+}
+.timeline-card::before {
+  content: '';
+  position: absolute;
+  left: 1rem;
+  top: 2rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  background: var(--primario);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--primario);
+}
+
+/* =====================
+   Botones modernos
+   ===================== */
+.btn-principal {
+  background: var(--gradiente) !important;
+  color: #fff !important;
+  border: none;
+  border-radius: var(--radio);
+  box-shadow: 0 2px 8px #6366f133;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+.btn-principal:hover {
+  filter: brightness(1.08) drop-shadow(0 0 8px #6366f1aa);
+  transform: translateY(-2px) scale(1.03);
+}
+.btn-cancelar {
+  background: var(--borde) !important;
+  color: var(--texto) !important;
+  border: none;
+  border-radius: var(--radio);
+  font-weight: 500;
+  transition: all 0.3s;
+}
+.btn-cancelar:hover {
+  background: #d1d5db !important;
+  color: var(--primario) !important;
+  transform: scale(1.03);
+}
+
+/* =====================
+   Inputs y campos
+   ===================== */
+.form-control {
+  border-radius: 0.75rem;
+  border: 1.5px solid var(--borde);
+  box-shadow: none;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+.form-control:focus {
+  border-color: var(--primario);
+  box-shadow: 0 0 0 2px #6366f155;
+}
+
+/* =====================
+   Feedback visual
+   ===================== */
+.alert-success {
+  border-left: 6px solid var(--success);
+  animation: fadeIn 0.7s;
+}
+.alert-danger, .alert-error {
+  border-left: 6px solid var(--danger);
+  animation: fadeIn 0.7s;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* =====================
+   Títulos con degradado neón
+   ===================== */
+.neon-text, h1, h2, h3, h4, h5, h6 {
+  background: linear-gradient(90deg, #4f46e5, #a21caf, #f472b6);
+  background-size: 200% 200%;
+  color: transparent !important;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 8px #a21caf55, 0 0 16px #f472b655;
+  animation: neonMove 3s ease-in-out infinite alternate;
+}
+@keyframes neonMove {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/* =====================
+   Animaciones generales
+   ===================== */
+.transition {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Spinner de carga */
+.spinner {
+  border: 4px solid #e5e7eb;
+  border-top: 4px solid var(--primario);
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  animation: spin 1s linear infinite;
+  margin: 2rem auto;
+  display: block;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Check animado */
+.checkmark {
+  width: 48px;
+  height: 48px;
+  display: block;
+  margin: 1rem auto;
+}
+.checkmark__circle {
+  stroke: var(--success);
+  stroke-width: 4;
+  fill: none;
+  animation: checkmarkCircle 0.6s ease-in-out;
+}
+.checkmark__check {
+  stroke: var(--success);
+  stroke-width: 4;
+  fill: none;
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  animation: checkmarkCheck 0.4s 0.3s forwards;
+}
+@keyframes checkmarkCircle {
+  0% { stroke-dasharray: 0 150; }
+  100% { stroke-dasharray: 150 0; }
+}
+@keyframes checkmarkCheck {
+  to { stroke-dashoffset: 0; }
+}
+
+.descripcion-evento {
+  color: var(--descripcion) !important;
+  transition: color 0.3s;
+} 
