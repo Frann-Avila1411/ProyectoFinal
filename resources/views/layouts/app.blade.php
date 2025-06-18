@@ -70,6 +70,13 @@
         themeSwitch.addEventListener('change', function() {
             setTheme(this.checked ? 'dark' : 'light');
         });
+
+         // 🔽 Guardar fecha actual en sessionStorage
+        const fechaActual = new Date().toISOString(); // o usa toLocaleString() si prefieres formato local
+        sessionStorage.setItem('fecha', fechaActual);
+
+        // (opcional) Verificar que se guardó
+        console.log("Fecha guardada en sessionStorage:", sessionStorage.getItem('fechaSesion'));
     </script>
 </body>
 </html> 
